@@ -45,12 +45,12 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="checkbox-form mb-sm-40">
-                                <h3>Billing Details</h3>
+                                <h3>Thông tin hóa đơn</h3>
                                 <div class="row">
                         
                                     <div class="col-md-12">
                                         <div class="checkout-form-list mb-30">
-                                            <label>Full name<span class="required">*</span></label>
+                                            <label>Họ và tên<span class="required">*</span></label>
                                             <input type="text" name="name" placeholder="" value="{{old('name')}}">
                                             @error('name')                        
                                                 <small class="text-danger">{{$message}}</small>
@@ -100,7 +100,7 @@
                                 
                                     <div class="col-md-6">
                                         <div class="checkout-form-list mb-30">
-                                            <label>Email Address <span class="required">*</span></label>
+                                            <label>Địa chỉ email <span class="required">*</span></label>
                                             <input type="email" name="email" placeholder="" value="{{old('email')}}">
                                             @error('email')                        
                                                 <small class="text-danger">{{$message}}</small>
@@ -109,7 +109,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list mb-30">
-                                            <label>Phone  <span class="required">*</span></label>
+                                            <label>SĐT <span class="required">*</span></label>
                                             <input type="text" name="phone" placeholder="Postcode / Zip" value="{{old('phone')}}">
                                             @error('phone')                        
                                                 <small class="text-danger">{{$message}}</small>
@@ -121,13 +121,13 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="your-order">
-                                <h3>Your order </h3>
+                                <h3>Đơn hàng của bạn </h3>
                                 <div class="your-order-table table-responsive">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th class="product-name">Product</th>
-                                                <th class="product-total">Total</th>
+                                                <th class="product-name">Sản phẩm</th>
+                                                <th class="product-total">Thành tiền</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -148,66 +148,28 @@
                                                 <td><span class="amount">£215.00</span></td>
                                             </tr> --}}
                                             <tr class="order-total">
-                                                <th>Order Total</th>
-                                                <td><span class=" total amount">{{number_format(Cart::session(Auth::user()->id)->getTotal(), 0, '', '.')}} VNĐ</span>
+                                                <th>Tổng tiền</th>
+                                                <td><span class=" total amount">{{number_format($total_sum, 0, '', '.')}} VNĐ</span>
                                                 </td>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
-                                {{-- <div class="payment-method">
-                                    <div id="accordion">
-                                        <div class="card">
-                                            <div class="card-header" id="headingone">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    Direct Bank Transfer
-                                                    </button>
-                                                </h5>
-                                            </div>
-
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingone" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingtwo">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Cheque Payment
-                                            </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingtwo" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingthree">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            PayPal
-                                            </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" aria-labelledby="headingthree" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                <input type='submit' name="btn_payment" value="Hoàn tất" class="btn btn-success">
+                                <hr>
+                                <h3>Thanh toán online</h3>
+                                <a href="{{route('cart.payment_VNpay')}}" name="redirect">
+                                    <img width="150" height="80"src="{{asset('img\logo\vnpay.png')}}" alt="">
+                                </a>
+                                <br><br>   
+                                <div class="d_input_order">
+                                    <input class="input_order" type='submit' name="btn_payment" value="Hoàn tất" class="btn btn-success">
+                                </div>                            
                             </div>
                         </div>
                     </div>
                 </form> 
             </div>
+            
         </div>
         <!-- checkout-area end -->
         <!-- Support Area Start Here -->

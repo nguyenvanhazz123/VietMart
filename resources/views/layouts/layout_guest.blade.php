@@ -34,6 +34,9 @@
     <!-- Main css -->
     <link rel="stylesheet" href="{{asset('style.css')}}">
     <link rel="stylesheet" href="{{asset('css/chat.css')}}">
+    <link rel="stylesheet" href="{{asset('css/review.css')}}">
+    <link rel="stylesheet" href="{{asset('css/detail-product.css')}}">
+    <link rel="stylesheet" href="{{asset('css/voucher.css')}}">
     <link rel="stylesheet" href="{{asset('css/custom-search-sug.css')}}">
 
     <!-- Responsive css -->
@@ -62,13 +65,13 @@
     </style>
     {{-- Kiểm tra đánh giá sản phẩm đã có--}}
     {{-- --Thành công --}}
-    @if(Session::has('success_review'))
+    {{-- @if(Session::has('success_review'))
     <script>
         $(document).ready(function() {
             $('#success_review').modal('show');
         });
     </script>
-    @endif
+    @endif --}}
     <div class="modal fade" id="success_review" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -79,23 +82,23 @@
             </button>
             </div>
             <div class="modal-body">
-                {{ Session::get('success_review') }}
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Đóng</button>
                 
             </div>
         </div>
         </div>
     </div>
     {{-- --Không thành công --}}
-    @if(Session::has('check_review'))
+    {{-- @if(Session::has('check_review'))
     <script>
         $(document).ready(function() {
             $('#check_review').modal('show');
         });
     </script>
-    @endif
+    @endif --}}
     <div class="modal fade" id="check_review" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -106,25 +109,15 @@
             </button>
             </div>
             <div class="modal-body">
-                {{ Session::get('check_review') }}
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Đóng</button>
                 
             </div>
         </div>
         </div>
     </div>
-
-
-    {{-- Thêm sản phẩm vào giỏ hàng thành công --}}
-    @if(Session::has('add_cart_success'))
-        <script>
-            $(document).ready(function() {
-                $('#add_cart_success').modal('show');
-            });
-        </script>
-    @endif
 
     <div class="modal fade" id="add_cart_success" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -136,7 +129,7 @@
               </button>
             </div>
             <div class="modal-body">
-                {{ Session::get('add_cart_success') }}
+               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -145,14 +138,6 @@
           </div>
         </div>
     </div>
-    {{-- Thêm sản phẩm vào mục yêu thích thành công --}}
-    @if(Session::has('add_wishlist_success'))
-        <script>
-            $(document).ready(function() {
-                $('#add_wishlist_success').modal('show');
-            });
-        </script>
-    @endif
 
     <div class="modal fade" id="add_wishlist_success" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -164,7 +149,7 @@
               </button>
             </div>
             <div class="modal-body">
-                {{ Session::get('add_wishlist_success') }}
+              
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -174,14 +159,6 @@
         </div>
     </div>
     
-    {{-- Thêm sản phẩm vào mục yêu thích không thành công --}}
-    @if(Session::has('add_wishlist_fail'))
-        <script>
-            $(document).ready(function() {
-                $('#add_wishlist_fail').modal('show');
-            });
-        </script>
-    @endif
     <div class="modal fade" id="add_wishlist_fail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -192,11 +169,30 @@
               </button>
             </div>
             <div class="modal-body">
-                {{ Session::get('add_wishlist_fail') }}
+               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_voucher_success" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Thông báo</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>                
             </div>
           </div>
         </div>
@@ -242,12 +238,23 @@
                     <!-- Header Top Start -->
                     <div class="header-top">
                         <ul>
-                            <li><a href="#">Free Shipping on order over $99</a></li>
-                            <li><a href="#">Shopping Cart</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
+                            <li><a href="#">Miễn phí giao hàng</a></li>
+                            <li><a href="#">Uy tín</a></li>
+                            <li><a href="#">Chất lượng</a></li>
+                            @php
+                                if(Auth::user()){
+                                    $user = Auth::user();
+                                    // Lấy vai trò của người dùng thông qua bảng user_role
+                                    $roles = $user->roles; 
+                                    $user_check = $roles->first()->pivot->role_id;
+                                }                              
+                            @endphp 
+                            @if (isset($user_check) && $user_check == 11)
+                                <li><a href="{{route('dashboard')}}">Trang bán hàng</a></li>                
+                            @endif
                         </ul>
                         <ul>                                          
-                            <li><span>Language</span> <a href="#">English<i class="lnr lnr-chevron-down"></i></a>
+                            <li><span>Ngôn ngữ</span> <a href="#">Tiếng Việt<i class="lnr lnr-chevron-down"></i></a>
                                 <!-- Dropdown Start -->
                                 <ul class="ht-dropdown">
                                     <li><a href="#"><img src="{{asset('img\header\1.jpg')}}" alt="language-selector">English</a></li>
@@ -255,7 +262,7 @@
                                 </ul>
                                 <!-- Dropdown End -->
                             </li>
-                            <li><span>Currency</span><a href="#"> USD $ <i class="lnr lnr-chevron-down"></i></a>
+                            <li><span>Đơn vị</span><a href="#"> VNĐ <i class="lnr lnr-chevron-down"></i></a>
                                 <!-- Dropdown Start -->
                                 <ul class="ht-dropdown">
                                     <li><a href="#">&#36; USD</a></li>
@@ -264,14 +271,14 @@
                                 </ul>
                                 <!-- Dropdown End -->
                             </li>
-                            <li><a href="#">My Account<i class="lnr lnr-chevron-down"></i></a>
+                            <li><a href="#">Tài khoản<i class="lnr lnr-chevron-down"></i></a>
                                 <!-- Dropdown Start -->
                                 <ul class="ht-dropdown">
                                     @if (Route::has('login'))
                                         @auth                                     
                                             <li>
                                                 <x-dropdown-link :href="route('profile.edit')">
-                                                    {{ __('Profile') }}
+                                                    {{ __('Thông tin') }}
                                                 </x-dropdown-link>                
                                             </li>
                                             <li>
@@ -280,17 +287,17 @@
                                                     <x-dropdown-link :href="route('logout')"
                                                             onclick="event.preventDefault();
                                                                         this.closest('form').submit();">
-                                                        {{ __('Log Out') }}
+                                                        {{ __('Đăng xuất') }}
                                                     </x-dropdown-link>
                                                 </form>
                                             </li>
                                         @else
                                             <li>
-                                                <a href="{{ route('login') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+                                                <a href="{{ route('login') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Đăng nhập</a>
                                             </li>
                                             <li>
                                                 @if (Route::has('register'))
-                                                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a></li>                                       
+                                                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Đăng ký</a></li>                                       
                                                 @endif
                                             </li>
                                            
@@ -314,7 +321,7 @@
                     <div class="row align-items-center no-gutters">
                         <div class="col-lg-3 col-md-12">
                             <div class="logo mb-all-30">
-                                <a href="{{route('home')}}"><img src="{{asset('img\logo\logo.png')}}" alt="logo-image"></a>
+                                <a href="{{route('home')}}"><img src="{{asset('img\logo\logoVietMart.jpg')}}" alt="logo-image"></a>
                             </div>
                         </div>
                         <!-- Categorie Search Box Start Here -->
@@ -332,7 +339,7 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="cart-box mt-all-30">
                                 <ul class="d-flex justify-content-lg-end justify-content-center align-items-center">
-                                    <li><a href="{{route('cart.show')}}"><i class="lnr lnr-cart"></i><span class="my-cart"><span class="total-pro">@if (Auth::user()){{Cart::session(Auth::user()->id)->getContent()->count()}}@else 0 @endif</span><span>cart</span></span></a>
+                                    <li><a href="{{route('cart.show')}}"><i class="lnr lnr-cart"></i><span class="my-cart"><span class="total-pro">@if (Auth::user()){{Cart::session(Auth::user()->id)->getContent()->count()}}@else 0 @endif</span><span>Giỏ hàng</span></span></a>
                                         
                                         <ul class="ht-dropdown cart-box-width">
                                             @if (Auth::user() && Cart::session(Auth::user()->id)->getContent()->count() > 0)
@@ -346,7 +353,7 @@
                                                     </div>
                                                     <div class="cart-content">
                                                         <h6><a href="product.html">{{$item->name}}</a></h6>
-                                                        <span class="cart-price">{{number_format($product->price, 0, '', '.')}}đ</span>
+                                                        <span class="cart-price">{{number_format($item->price, 0, '', '.')}}đ</span>
                                                         {{-- <span>Size: S</span>
                                                         <span>Color: Yellow</span> --}}
                                                     </div>
@@ -376,9 +383,9 @@
                                       
                                        
                                     </li>
-                                    <li><a href="{{route('wishlist.show')}}"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Wish</span><span>list @if(isset($list_wish_list))({{$list_wish_list->count()}})@else (0) @endif </span></span></a>
+                                    <li><a href="{{route('wishlist.show')}}"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Yêu </span><span class="count-wishlist">thích @if(isset($list_wish_list))({{$list_wish_list->count()}})@else (0) @endif </span></span></a>
                                     </li>
-                                    <li><a href="{{route('cart.history')}}"><i class="lnr lnr-user"></i><span class="my-cart"><span>Purchase</span><span>history</span></a>
+                                    <li><a href="{{route('cart.history')}}"><i class="lnr lnr-user"></i><span class="my-cart"><span>Lịch </span><span>sử</span></a>
 
 
 
@@ -405,8 +412,9 @@
                                 <ul class="header-bottom-list d-flex list-header">
                                     <li class="{{ Request::routeIs('home') ? 'active' : '' }}"><a href="{{route('home')}}">Trang chủ</a></li>
                                     <li class="{{ Request::routeIs('post.show') ? 'active' : '' }}"><a href="{{route('post.show')}}">Bài viết</a></li>
-                                    <li><a href="#">About us</a></li>
-                                    <li><a href="#">contact us</a></li>
+                                    {{-- <li><a href="#">About us</a></li>
+                                    <li><a href="#">contact us</a></li> --}}
+                                    <li class="{{ Request::routeIs('voucher.show') ? 'active' : '' }}"><a href="{{route('voucher.show')}}">Mã giảm giá</a></li>
                                 </ul>
                             </nav>
                             <div class="mobile-menu d-block d-lg-none">
@@ -666,118 +674,7 @@
             <!-- Footer Bottom End -->
         </footer>
         <!-- Footer Area End Here -->
-        <!-- Quick View Content Start -->
-        <div class="main-product-thumbnail quick-thumb-content">
-            <div class="container">
-                <!-- The Modal -->
-                <div class="modal fade" id="myModal">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <div class="row">
-                                    <!-- Main Thumbnail Image Start -->
-                                    <div class="col-lg-5 col-md-6 col-sm-5">
-                                        <!-- Thumbnail Large Image start -->
-                                        <div class="tab-content">
-                                            <div id="thumb1" class="tab-pane fade show active">
-                                                <a data-fancybox="images" href="{{asset('img\products\35.jpg')}}"><img src="{{asset('img\products\35.jpg')}}" alt="product-view"></a>
-                                            </div>
-                                            <div id="thumb2" class="tab-pane fade">
-                                                <a data-fancybox="images" href="{{asset('img\products\13.jpg')}}"><img src="{{asset('img\products\13.jpg')}}" alt="product-view"></a>
-                                            </div>
-                                            <div id="thumb3" class="tab-pane fade">
-                                                <a data-fancybox="images" href="{{asset('img\products\15.jpg')}}"><img src="{{asset('img\products\15.jpg')}}" alt="product-view"></a>
-                                            </div>
-                                            <div id="thumb4" class="tab-pane fade">
-                                                <a data-fancybox="images" href="{{asset('img\products\4.jpg')}}"><img src="{{asset('img\products\4.jpg')}}" alt="product-view"></a>
-                                            </div>
-                                            <div id="thumb5" class="tab-pane fade">
-                                                <a data-fancybox="images" href="{{asset('img\products\5.jpg')}}"><img src="{{asset('img\products\5.jpg')}}" alt="product-view"></a>
-                                            </div>
-                                        </div>
-                                        <!-- Thumbnail Large Image End -->
-                                        <!-- Thumbnail Image End -->
-                                        <div class="product-thumbnail mt-20">
-                                            <div class="thumb-menu owl-carousel nav tabs-area" role="tablist">
-                                                <a class="active" data-toggle="tab" href="#thumb1"><img src="{{asset('img\products\35.jpg')}}" alt="product-thumbnail"></a>
-                                                <a data-toggle="tab" href="#thumb2"><img src="{{asset('img\products\13.jpg')}}" alt="product-thumbnail"></a>
-                                                <a data-toggle="tab" href="#thumb3"><img src="{{asset('img\products\15.jpg')}}" alt="product-thumbnail"></a>
-                                                <a data-toggle="tab" href="#thumb4"><img src="{{asset('img\products\4.jpg')}}" alt="product-thumbnail"></a>
-                                                <a data-toggle="tab" href="#thumb5"><img src="{{asset('img\products\5.jpg')}}" alt="product-thumbnail"></a>
-                                            </div>
-                                        </div>
-                                        <!-- Thumbnail image end -->
-                                    </div>
-                                    <!-- Main Thumbnail Image End -->
-                                    <!-- Thumbnail Description Start -->
-                                    <div class="col-lg-7 col-md-6 col-sm-7">
-                                        <div class="thubnail-desc fix mt-sm-40">
-                                            <h3 class="product-header">Printed Summer Dress</h3>
-                                            <div class="pro-price mtb-30">
-                                                <p class="d-flex align-items-center"><span class="prev-price">16.51</span><span class="price">$15.19</span><span class="saving-price">save 8%</span></p>
-                                            </div>
-                                            <p class="mb-20 pro-desc-details">Long printed dress with thin adjustable straps. V-neckline and wiring under the bust with ruffles at the bottom of the dress.</p>
-                                            <div class="product-size mb-20 clearfix">
-                                                <label>Size</label>
-                                                <select class="">
-                                                    <option>S</option>
-                                                    <option>M</option>
-                                                    <option>L</option>
-                                                </select>
-                                            </div>
-                                            <div class="color mb-20">
-                                                <label>color</label>
-                                                <ul class="color-list">
-                                                    <li>
-                                                        <a class="orange active" href="#"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="paste" href="#"></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="box-quantity d-flex">
-                                                <form action="#">
-                                                    <input class="quantity mr-40" type="number" min="1" value="1">
-                                                </form>
-                                                <a class="add-cart" href="cart.html">add to cart</a>
-                                            </div>
-                                            <div class="pro-ref mt-15">
-                                                <p><span class="in-stock"><i class="ion-checkmark-round"></i> IN STOCK</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Thumbnail Description End -->
-                                </div>
-                            </div>
-                            <!-- Modal footer -->
-                            <div class="custom-footer">
-                                <div class="socila-sharing">
-                                    <ul class="d-flex">
-                                        <li>share</li>
-                                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-google-plus-official" aria-hidden="true"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>  
-        <!-- Quick View Content End -->
     </div>
-
-  
-
-    
 
    <!-- Nút Chat -->
   <div id="chatButton" style="position: fixed; bottom: 10px; right: 20px; z-index:999999 ; background-color: #E62E04; border-radius: 50%; padding: 15px; cursor: pointer;">

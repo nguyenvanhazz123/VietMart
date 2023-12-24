@@ -257,38 +257,7 @@
                         <div class="sidebar-desc mb-50">
                             {!! $post->content !!}
                         </div>
-                        <!-- Contact Email Area Start -->
-                        <div class="blog-detail-contact">
-                            <h3 class="mb-15 leave-reply">Leave a Reply</h3>
-                            <div class="submit-review">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="usr">Your Name:</label>
-                                        <input type="text" class="form-control" id="usr">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="usr">your email:</label>
-                                        <input type="email" class="form-control" id="email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="web-address">Website Url:</label>
-                                        <input type="text" class="form-control" id="web-address">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sub">Subject:</label>
-                                        <input type="text" class="form-control" id="sub">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="comment">Comment:</label>
-                                        <textarea class="form-control" rows="5" id="comment"></textarea>
-                                    </div>
-                                    <div class="sbumit-reveiew">
-                                        <input value="Submit" class="return-customer-btn" type="submit">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- Contact Email Area End -->
+                      
                     </div>
                 </div>
                 <!-- Single Blog Sidebar Description End -->

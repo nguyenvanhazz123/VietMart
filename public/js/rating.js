@@ -34,4 +34,47 @@ $(document).ready(function() {
             }
         });
     });
+    $('.product-rating-overview__filter').on('click', function () {
+        // Ẩn tất cả các nút lọc
+        $('.product-rating-overview__filter').removeClass('product-rating-overview__filter--active');
+
+        // Thêm lớp active-filter cho nút lọc được click
+        $(this).addClass('product-rating-overview__filter--active');       
+    });
+    // Xử lý khi click vào tất cả
+    $('#allFilter').on('click', function() {
+        $('.review-list').show();
+    });
+
+    // Xử lý khi click vào 5 sao
+    $('#fiveStarFilter').on('click', function() {
+        $('.review-list').hide();
+        $('.star-rating-5').show();
+    });   
+   
+
+    // Xử lý khi click vào 4 sao
+    $('#fourStarFilter').on('click', function() {
+        $('.review-list').hide();
+        $('.star-rating-4').show();
+    });
+
+    // Xử lý khi click vào 3 sao
+    $('#threeStarFilter').on('click', function() {
+        $('.review-list').hide();
+        $('.star-rating-3').show();
+    });
+
+    // Xử lý khi click vào 2 sao
+    $('#twoStarFilter').on('click', function() {
+        $('.review-list').hide();
+        $('.star-rating-2').show();
+    });
+
+    // Xử lý khi click vào 1 sao
+    $('#oneStarFilter').on('click', function() {
+        $('.review-list').hide();
+        $('.star-rating-1').show();
+    });
+
 });

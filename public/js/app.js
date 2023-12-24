@@ -1,6 +1,25 @@
 $(document).ready(function() {
-   
+    var baseUrl = '/DoAn/vietmart';
+    //Xử lý select voucher type
+    $('#discount_type').change(function() {
+        var selectedOption = $(this).val();
 
+        // Ẩn tất cả các input
+        $('#fixedDiscountInput').hide();
+        $('#percentageDiscountInput').hide();
+        $('#maxDiscountInputGroup').hide();
+
+        // Hiển thị input tương ứng với lựa chọn
+        if (selectedOption === 'fixed') {
+            $('#fixedDiscountInput').show();
+        } else if (selectedOption === 'percentage') {
+            $('#percentageDiscountInput').show();
+            $('#maxDiscountInputGroup').show();
+        }
+    });
+
+
+    //=======================================================================
     $('.nav-link.active .sub-menu').slideDown();
     $('#general_info.active .sub-menu-child').slideDown();
     $('#private_info.active .sub-menu-child').slideDown();
@@ -30,7 +49,7 @@ $(document).ready(function() {
         var industryId = $(this).val();
         if (industryId) {
             $.ajax({
-                url: 'http://localhost/DoAn/vietmart/get-segments/' + industryId,
+                url: baseUrl + '/get-segments/' + industryId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -52,7 +71,7 @@ $(document).ready(function() {
         var segmentId = $(this).val();
         if (segmentId) {
             $.ajax({
-                url: 'http://localhost/DoAn/vietmart/get-product-cats/' + segmentId,
+                url: baseUrl + '/get-product-cats/' + segmentId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -109,6 +128,7 @@ $(document).ready(function() {
 });
 
 function loadAttributes(product_cat_id) {
+    var baseUrl = '/DoAn/vietmart';
     var list_id_fashion = ['8', '9'];
     var list_electronic_device = ['10'];
     var industryId = $('#industry-select').val();
@@ -120,7 +140,7 @@ function loadAttributes(product_cat_id) {
     }
 
     $.ajax({
-        url: 'http://localhost/DoAn/vietmart/attributes/' + product_cat_id,
+        url: baseUrl + '/attributes/' + product_cat_id,
         type: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -140,7 +160,7 @@ function loadAttributes(product_cat_id) {
             $('#brand-box').html(brand_box);
 
             //Load material
-            if(industryId == 8){
+            if(industryId != 10){
                 var list_material = response.list_material;
                 var material_box = '';
                 material_box += '<label for="brand">Chất liệu</label>' +
@@ -160,7 +180,7 @@ function loadAttributes(product_cat_id) {
             
 
              //Load pattern
-             if(industryId == 8){
+             if(industryId != 10){
              var list_pattern = response.list_pattern;
              var pattern_box = '';
              pattern_box += '<label for="brand">Mẫu</label>' +

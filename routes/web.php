@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\AdminUserController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminAttributeController;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\AdminVoucherVietMart;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
@@ -17,6 +19,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\VoucherVietMart;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,21 +56,30 @@ Route::middleware(['auth'])->group(function () {
     //========================================Phần người dùng================================================================
     
     Route::get('/admin', [DashBoardController::class, 'show'])->name('dashboard')->can('dashboard.view');
+    //====================Voucher================================
+    Route::get('voucher/show', [VoucherController::class, 'show'])->name('voucher.show');
+    
+
     //====================Shopping CART================================
     Route::get('cart/show', [CartController::class, 'show'])->name('cart.show');
     Route::get('cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
-    Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::get('cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::get('cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');;
     //Thanh toán
     Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('cart/payment', [CartController::class, 'payment'])->name('cart.payment');
+    //Tích hợp thanh toán VNPay
+    Route::get('cart/payment_VNpay', [CartController::class, 'payment_VNpay'])->name('cart.payment_VNpay');
     //Lịch sử mua hàng
     Route::get('cart/history', [CartController::class, 'history'])->name('cart.history');
+    //Voucher sản phẩm
+    Route::post('cart/voucher', [CartController::class, 'voucher'])->name('cart.voucher');
 
     //==================================PRODUCT==================================================
     //Chi tiết sản phẩm
-    Route::get('product/detail/{id}', [ProductController::class, 'detail'])->name('product.detail');
+    Route::get('product/detail/{id}', [ProductController::class, 'detail'])->name('product.detail');        
+    Route::get('getColorsBySize/{productId}/{sizeId}', [ProductController::class, 'getColorsBySize'])->name('product.getColor');
     //Đánh giá sản phẩm
     Route::post('product/review/{id}', [ProductController::class, 'review'])->name('product.review');
     
@@ -88,6 +100,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //=================Voucher VietMart===================
+    Route::get('/admin/voucher/list', [AdminVoucherVietMart::class, 'list'])->name('voucher_list')->can('voucher.view');   
+    Route::get('/admin/voucher/add', [AdminVoucherVietMart::class, 'add'])->name('add_voucher')->can('voucher.add');
+    Route::post('/admin/voucher/store', [AdminVoucherVietMart::class, 'store']);
+    Route::get('/admin/voucher/edit/{id}', [AdminVoucherVietMart::class, 'edit'])->name('edit_voucher')->can('voucher.edit');
+    Route::post('/admin/voucher/update/{id}', [AdminVoucherVietMart::class, 'update'])->name('update_voucher');
+    Route::get('/admin/voucher/delete/{id}', [AdminVoucherVietMart::class, 'delete'])->name('delete_voucher')->can('voucher.delete');
 
     //=================User===================
     //Xem danh sách user
@@ -145,6 +165,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/product/attribute_value/edit/{id}', [AdminAttributeController::class, 'edit_attribute_value'])->name('edit_attribute_value');
     Route::post('/admin/product/attribute_value/update/{id}', [AdminAttributeController::class, 'update_attribute_value'])->name('update_attribute_value');
     Route::get('/admin/product/attribute_value/delete/{id}', [AdminAttributeController::class, 'delete_attribute_value'])->name('delete_attribute_value');
+
+    //Xuất file excel products
+    Route::get('/admin/product/excel', [AdminProductController::class, 'export'])->name('export_products');
 
     //==========================================Quản lý các thông tin chung của sản phẩm==================================
     //Material
@@ -234,7 +257,7 @@ Route::middleware(['auth'])->group(function () {
     //Các hành động
     Route::post('/admin/role/action', [RoleController::class, 'action']);
     //Xóa role
-    Route::get('/admin/role/delete/{id}', [RoleController::class , 'delete'])->name('delete_role')->can('role.delete');
+    Route::get('/admin/role/delete/{id}', [RoleController::class , 'delete'])->name('role.delete')->can('role.delete');
     //Thêm vai trò (role)
     Route::get('/admin/role/add', [RoleController::class, 'add'])->name('role.add')->can('role.add');
     Route::post('/admin/role/store', [RoleController::class, 'store'])->name('role.store');

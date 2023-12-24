@@ -18,7 +18,7 @@
                     <input type="submit" name="btn-search" value="Tìm kiếm" class="btn btn-primary">
                 </form>
             </div>
-        </div>
+        </div>        
         <div class="card-body">
             <div class="analytic">
                 @canany(['owner.view'])
@@ -29,9 +29,13 @@
                 @endcanany
                 @canany(['product.view_cat'])
                 <a href="{{request()->fullUrlWithQuery(['status'=>'approved'])}}" class="text-primary">Sản phẩm đã kiểm duyệt<span class="text-muted">({{$count[4]}})</span></a>  
-                <a href="{{request()->fullUrlWithQuery(['status'=>'not_approved'])}}" class="text-primary">Sản phẩm đợi kiểm duyệt<span class="text-muted">({{$count[5]}})</span></a>  
-                @endcanany
-            </div>
+                <a href="{{request()->fullUrlWithQuery(['status'=>'not_approved'])}}" class="text-primary">Sản phẩm đợi kiểm duyệt<span class="text-muted">({{$count[5]}})</span></a>                               
+                <form action="{{url('admin/product/excel')}}" method="get">
+                    <button class="btn btn-primary">Xuất excel</button>
+                </form>
+                @endcanany                  
+            </div>  
+                 
             <form action="{{url('admin/product/action')}}" method="post">
                 @csrf
                 <div class="form-action form-inline py-3">

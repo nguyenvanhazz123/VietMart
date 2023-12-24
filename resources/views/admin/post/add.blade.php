@@ -46,21 +46,7 @@
                     @error('post_cat')
                         <small class="form-text text-danger">{{$message}}</small>                    
                     @enderror
-                </div>
-                {{-- <div class="form-group">
-                    <label for="">Trạng thái</label>
-                    @foreach ($list_censorship as $item)
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="censorship_id" id="exampleRadios1" value="{{$item->id}}" checked>
-                        <label class="form-check-label" for="exampleRadios1">
-                            {{$item->name_censorship}}
-                        </label>
-                    </div>
-                    @endforeach
-                </div> --}}
-
-
-
+                </div>          
                 <button type="submit" class="btn btn-primary">Thêm mới</button>
             </form>
         </div>

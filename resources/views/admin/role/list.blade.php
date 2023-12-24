@@ -25,8 +25,7 @@
                         <option value ="">Chọn</option>
                         @foreach ($list_act as $key => $value)
                             <option value="{{$key}}">{{$value}}</option>
-                        @endforeach
-                        
+                        @endforeach                        
                     </select>
                     <input type="submit" name="btn-search" value="Áp dụng" class="btn btn-primary">
                 </div>
@@ -54,13 +53,12 @@
                             </td>
                             <td scope="row">{{$stt++}}</td>
                             <td><a href="">{{$role->name}}</a></td>
-                            <td>{{$role->description}}</td>
+                            <td>{!! $role->description !!}</td>
                             <td>{{$role->created_at}}</td>
                             <td>
                                 <a href="{{route('role.edit', $role->id)}}" class="btn btn-success btn-sm rounded-0 text-white" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                                <a href="{{route('delete_role', $role->id)}}" onclick="return confirm('Bạn có chắc muốn xóa vai trò?');" class="btn btn-danger btn-sm rounded-0 text-white" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
+                                <a href="{{route('role.delete', $role->id)}}" onclick="return confirm('Bạn có chắc muốn xóa vai trò?');" class="btn btn-danger btn-sm rounded-0 text-white" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
                             </td>
-
                         </tr>
                         @empty
                         <tr class="bg-white">

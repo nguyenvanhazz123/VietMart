@@ -32,7 +32,24 @@ class DashBoardController extends Controller
             $total = Order_detail::where('owner_id', $owner_id)->sum('total');
             $count = [$count_order_finished, $count_order_unfinished];
             $list_order_detail = $list_order_detail->paginate(5);
-            return view('admin.dashboard_owner', compact('count', 'list_order_detail', 'total', 'sum_order_trash'));
+            $monthlyRevenue = Order_detail::where('owner_id', $owner_id)
+                ->select(
+                    Order_detail::raw('MONTH(created_at) as month'),
+                    Order_detail::raw('SUM(price) as total_amount')
+                )
+                ->groupBy(Order_detail::raw('MONTH(created_at)'))
+                ->orderBy('month')
+                ->pluck('total_amount', 'month')
+                ->toArray();     
+            $allMonths = range(1, 10);
+            $monthlyData = array_fill_keys($allMonths, 0);
+
+            // Gộp dữ liệu thực tế vào mảng kết quả
+            $monthlyResult = array_merge($monthlyData, $monthlyRevenue);
+
+            // Lấy mảng giá trị để truyền vào biểu đồ Highcharts
+            $dataForChart = array_values($monthlyResult);              
+            return view('admin.dashboard_owner', compact('count', 'list_order_detail', 'total', 'sum_order_trash', 'dataForChart'));
         }
         $list_order = $list_order->paginate(5);
         $count = [$count_order];
@@ -42,7 +59,7 @@ class DashBoardController extends Controller
     function delete($id){
         if($id != null){
             $order = Order::find($id);
-            $order->delete();
+            $order->forceDelete();
             return redirect('admin')->with('status', 'Xóa thành công');
         }
         return redirect('admin')->with('status', 'Xóa không thành công');

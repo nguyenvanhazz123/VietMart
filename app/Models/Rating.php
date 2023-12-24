@@ -18,4 +18,8 @@ class Rating extends Model
     function product(){
         return $this->belongsTo('App\Models\Product', 'product_id');
     }
+    public function comment()
+    {
+        return $this->hasOne(Comment::class, 'rating_id');
+    }
 }

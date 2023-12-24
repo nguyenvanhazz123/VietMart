@@ -46,6 +46,8 @@
                             <th scope="col">#</th>
                             <th scope="col">Mã đơn hàng</th>
                             <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Kiểu/Loại</th>
+                            <th scope="col">Màu</th>
                             <th scope="col">Số lượng</th>
                             <th scope="col">Giá trị</th>
                             <th scope="col">Tổng giá trị</th>
@@ -69,6 +71,8 @@
                                 <td>{{$stt}}</td>
                                 <td>{{$order_detail->order->code}}</td>
                                 <td>{{$order_detail->product->name}}</td>
+                                <td>{{$order_detail->type}}</td>
+                                <td>{{$order_detail->color}}</td>
                                 <td>{{$order_detail->quantity}}</td>
                                 <td>{{number_format($order_detail->price, 0, '', '.')}}</td>
                                 <td>{{number_format($order_detail->total, 0, '', '.')}}</td>
@@ -81,7 +85,7 @@
                                 </td>
                                 <td>{{$order_detail->created_at}}</td>
                                 <td>
-                                    <a href="{{route('delete_order_dashboard', $order_detail->id)}}" onclick="return confirm('Bạn có chắc muốn hủy Đơn hàng?');" class="btn btn-danger btn-sm rounded-0 text-white" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
+                                    <a href="{{route('delete_order', $order_detail->id)}}" onclick="return confirm('Bạn có chắc muốn hủy Đơn hàng?');" class="btn btn-danger btn-sm rounded-0 text-white" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach        

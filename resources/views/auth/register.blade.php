@@ -28,8 +28,8 @@
                 <div class="container">
                     <div class="breadcrumb">
                         <ul class="d-flex align-items-center">
-                            <li><a href="index.html">Home</a></li>
-                            <li class="active"><a href="register.html">Register</a></li>
+                            <li><a href="#">Trang chủ</a></li>
+                            <li class="active"><a href="#">Đăng ký</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,8 +42,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="register-title">
-                                <h3 class="mb-10">REGISTER ACCOUNT</h3>
-                                <p class="mb-10">If you already have an account with us, please login at the login page.</p>
+                                <h3 class="mb-10">ĐĂNG KÝ TÀI KHOẢN</h3>
+                                <p class="mb-10">Nếu bạn đã có tài khoản với chúng tôi, vui lòng đăng nhập tại trang đăng nhập</p>
                             </div>
                         </div>
                     </div>
@@ -53,20 +53,20 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
                                 <fieldset>
-                                    <legend>Your Personal Details</legend>
+                                    <legend>Thông tin cá nhân</legend>
                                     <div class="form-group d-md-flex align-items-md-center">
-                                        <label class="control-label col-md-2" for="name"><span class="require">*</span>Full Name</label>
+                                        <label class="control-label col-md-2" for="name"><span class="require">*</span>Họ và tên</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="name" id="name" value="{{old('name')}}" placeholder="Last Name" required autofocus autocomplete="name">
+                                            <input type="text" class="form-control" name="name" id="name" value="{{old('name')}}" placeholder="Nhập họ và tên..." required autofocus autocomplete="name">
                                         </div>
                                         @error('name')                        
                                             <small class="text-danger">{{$message}}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group d-md-flex align-items-md-center">
-                                        <label class="control-label col-md-2" for="email"><span class="require">*</span>Enter you email address here...</label>
+                                        <label class="control-label col-md-2" for="email"><span class="require">*</span>Email</label>
                                         <div class="col-md-10">
-                                            <input type="email" class="form-control" name="email" id="email" value="{{old('email')}}" placeholder="Enter you email address here..." required autocomplete="username">
+                                            <input type="email" class="form-control" name="email" id="email" value="{{old('email')}}" placeholder="Nhập email..." required autocomplete="username">
                                         </div>
                                         @error('email')                        
                                             <small class="text-danger">{{$message}}</small>
@@ -79,21 +79,20 @@
                                         </div>
                                     </div> --}}
                                 </fieldset>
-                                <fieldset>
-                                    <legend>Your Password</legend>
+                                <fieldset>                                    
                                     <div class="form-group d-md-flex align-items-md-center">
-                                        <label class="control-label col-md-2" for="password"><span class="require">*</span>Password:</label>
+                                        <label class="control-label col-md-2" for="password"><span class="require">*</span>Mật khẩu:</label>
                                         <div class="col-md-10">
-                                            <input type="password" name="password" class="form-control" id="password" placeholder="Password"  required autocomplete="new-password">
+                                            <input type="password" name="password" class="form-control" id="password" placeholder="Nhập mật khẩu..."  required autocomplete="new-password">
                                         </div>
                                         @error('password')                        
                                             <small class="text-danger">{{$message}}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group d-md-flex align-items-md-center">
-                                        <label class="control-label col-md-2" for="password_confirmation"><span class="require">*</span>Confirm Password</label>
+                                        <label class="control-label col-md-2" for="password_confirmation"><span class="require">*</span>Xác nhận mật khẩu</label>
                                         <div class="col-md-10">
-                                            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Confirm password" required autocomplete="new-password">
+                                            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Nhập lại mật khẩu..." required autocomplete="new-password">
                                         </div>
                                         @error('password_confirmation')                        
                                             <small class="text-danger">{{$message}}</small>
@@ -114,7 +113,7 @@
                                     <div class="float-md-right">
                                         {{-- <span>I have read and agree to the <a href="#" class="agree"><b>Privacy Policy</b></a></span>
                                         <input type="checkbox" name="agree" value="1"> &nbsp; --}}
-                                        <input type="submit" value="Continue" class="return-customer-btn">
+                                        <input type="submit" value="Tiếp tục" class="return-customer-btn">
                                     </div>
                                 </div>
                             </form>

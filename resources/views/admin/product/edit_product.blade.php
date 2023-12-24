@@ -10,7 +10,7 @@
             <form action="{{route('product.update_product', $product->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf   
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="form-group">
                             <label for="name">Tên sản phẩm</label>
                             <input class="form-control" type="text" name="name" id="name" value="{{$product->name}}">
@@ -18,6 +18,8 @@
                                 <small class="form-text text-danger">{{$message}}</small>                    
                             @enderror
                         </div>
+                    </div>
+                    <div class="col-12">                    
                         <div class="form-group">
                             <label for="name">Giá</label>
                             <input class="form-control" type="text" name="price" id="name" value="{{$product->price}}">
@@ -26,7 +28,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="form-group">
                             <label for="intro">Mô tả sản phẩm</label>
                             <textarea name="content" class="form-control" id="intro" cols="30" rows="5">{{$product->content}}</textarea>

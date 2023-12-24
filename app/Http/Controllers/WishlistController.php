@@ -20,19 +20,25 @@ class WishlistController extends Controller
     }
     
     function add($id){
-        $user_id = Auth::user()->id;
-        //Kiểm tra xem sản phẩm đã tồn tại trong wishlist hay chưa
-        $existingWishList = Wish_List::where('user_id', $user_id)->where('product_id', $id)->first();
-        if ($existingWishList) {
-            // Sản phẩm đã tồn tại trong wishlist, thực hiện các hành động cần thiết
-            // Ví dụ: Hiển thị thông báo cho người dùng
-            return Redirect::back()->with('add_wishlist_fail', 'Sản phẩm đã tồn tại trong wishlist.');
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
+            //Kiểm tra xem sản phẩm đã tồn tại trong wishlist hay chưa
+            $existingWishList = Wish_List::where('user_id', $user_id)->where('product_id', $id)->first();
+            if ($existingWishList) {
+                // return Redirect::back()->with('add_wishlist_fail', 'Sản phẩm đã tồn tại trong wishlist.');
+                return response()->json(['messageFalse' => 'Sản phẩm đã tồn tại trong wishlist']);
+            }
+            Wish_list::create([
+                'user_id' => $user_id,
+                'product_id' => $id,
+            ]);
+            $list_wish_list = Wish_list::with('product')->where('user_id', $user_id)->count();
+            return response()->json(['messageTrue' => 'Thêm thành công sản phẩm vào mục yêu thích', 'list_wish_list' => $list_wish_list]);
+        } else {
+            return response()->json(['message' => 'Bạn phải đăng nhập để thực hiện thao tác này'], 401);
         }
-        Wish_list::create([
-            'user_id' => $user_id,
-            'product_id' => $id,
-        ]);
-        return Redirect::back()->with('add_wishlist_success', 'Thêm thành công sản phẩm vào mục yêu thích');
+        
+        // return Redirect::back()->with('add_wishlist_success', 'Thêm thành công sản phẩm vào mục yêu thích');
         // return redirect('wishlist/show');
     }
 

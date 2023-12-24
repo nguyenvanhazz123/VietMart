@@ -129,9 +129,10 @@ class AdminPostController extends Controller
             //Lấy tên file
             $filename = $file -> getClientOriginalName();
 
-            $file -> move('public/images', $file -> getClientOriginalName());           
+            // $file -> move('public/images', $file -> getClientOriginalName());           
+            $file -> move('public/img/blog', $file -> getClientOriginalName());           
 
-            $thumbnail = 'images/'.$filename;
+            $thumbnail = 'img/blog/'.$filename;
             $input['thumbnail'] = $thumbnail;
         }
         $input['slug'] = Str::slug($request->title);

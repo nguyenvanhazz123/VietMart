@@ -16,6 +16,7 @@ class CategoryController extends Controller
                         ->segment()
                         ->join('product_category', 'segments.id', '=', 'product_category.segment_id')
                         ->join('products', 'product_category.id', '=', 'products.product_cat_id')
+                        ->where('products.censorship_id', 1)
                         ->select('products.*');
         if($request->query('segment')){
             $segment_id = $request->query('segment');
@@ -23,6 +24,7 @@ class CategoryController extends Controller
                             ->segment()
                             ->join('product_category', 'segments.id', '=', 'product_category.segment_id')
                             ->join('products', 'product_category.id', '=', 'products.product_cat_id')
+                            ->where('products.censorship_id', 1)
                             ->where('segments.id', $segment_id)
                             ->select('products.*');
         }
@@ -51,7 +53,7 @@ class CategoryController extends Controller
             $max_price = $request->query('max_price');
             $list_product = $list_product -> whereBetween('price', [$min_price, $max_price]);
         }
-        $list_product = $list_product->paginate(5);
+        $list_product = $list_product->paginate(6);
         if ($request->ajax()) {
             // Trả về JSON cho các yêu cầu Ajax
             return response()->json(View::make('shop.product_list', compact('list_product'))->render());
@@ -61,7 +63,7 @@ class CategoryController extends Controller
 
     function search(Request $request){
         $keyword = $request->query('keyword');
-        $list_product = Product::where('name', 'like', '%'. $keyword. '%');
+        $list_product = Product::where('censorship_id', 1)->where('name', 'like', '%'. $keyword. '%');
         if($request->query('order_by')){
             $orderby = $request->query('order_by');
             switch($orderby){
@@ -86,7 +88,7 @@ class CategoryController extends Controller
             $max_price = $request->query('max_price');
             $list_product = $list_product -> whereBetween('price', [$min_price, $max_price]);
         }
-        $list_product = $list_product->paginate(5);
+        $list_product = $list_product->paginate(6);
         if ($request->ajax()) {
             return response()->json(View::make('shop.product_list', compact('list_product'))->render());
         }
@@ -97,7 +99,7 @@ class CategoryController extends Controller
 
         $query = $request->input('query');
 
-        $results = Product::where('name', 'LIKE', '%' . $query . '%')->get();
+        $results = Product::where('censorship_id', 1)->where('name', 'LIKE', '%' . $query . '%')->get();
 
         return response()->json($results);
 

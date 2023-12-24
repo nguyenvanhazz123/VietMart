@@ -29,9 +29,9 @@
                 <div class="container">
                     <div class="breadcrumb">
                         <ul class="d-flex align-items-center">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="register.html">account</a></li>
-                            <li class="active"><a href="contact.html">contact us</a></li>
+                            <li><a href="#">Trang chủ</a></li>
+                            <li><a href="#">Tài khoản</a></li>
+                            <li class="#"><a href="contact.html">Đăng nhập</a></li>
                         </ul>
                     </div>
                 </div>
@@ -46,10 +46,10 @@
                         <div class="col-md-6">
                             <div class="well mb-sm-30">
                                 <div class="new-customer">
-                                    <h3 class="custom-title">new customer</h3>
-                                    <p class="mtb-10"><strong>Register</strong></p>
-                                    <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made</p>
-                                    <a class="customer-btn" href="{{ route('register') }}">continue</a>
+                                    <h3 class="custom-title">Khách hàng mới</h3>
+                                    <p class="mtb-10"><strong>Đăng ký</strong></p>
+                                    <p>Bằng cách tạo tài khoản, bạn sẽ có thể mua sắm nhanh hơn, cập nhật trạng thái đơn hàng và theo dõi các đơn hàng bạn đã thực hiện trước đó</p>
+                                    <a class="customer-btn" href="{{ route('register') }}">Tiếp tục</a>
                                 </div>
                             </div>
                         </div>
@@ -58,30 +58,29 @@
                         <div class="col-md-6">
                             <div class="well">
                                 <div class="return-customer">
-                                    <h3 class="mb-10 custom-title">returnng customer</h3>
-                                    <p class="mb-10"><strong>I am a returning customer</strong></p>
+                                    <h3 class="mb-10 custom-title">Đăng nhập</h3>                                    
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="Enter your email address..." class="form-control" required autofocus autocomplete="username">
+                                            <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="Nhập email của bạn..." class="form-control" required autofocus autocomplete="username">
                                             @error('email')                        
                                                 <small class="text-danger">{{$message}}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label>Password</label>
-                                            <input type="password" id="password" name="password" placeholder="Password"  class="form-control" required autocomplete="current-password">
+                                            <label>Mật khẩu</label>
+                                            <input type="password" id="password" name="password" placeholder="Nhập mật khẩu..."  class="form-control" required autocomplete="current-password">
                                             @error('password')                        
                                                 <small class="text-danger">{{$message}}</small>
                                             @enderror
                                         </div>
                                         @if (Route::has('password.request'))
                                         <p class="lost-password">
-                                            <a href="{{ route('password.request') }}">Forgot password?</a>
+                                            <a href="{{ route('password.request') }}">Quên mật khẩu?</a>
                                         </p>
                                         @endif
-                                        <input type="submit" value="Login" class="return-customer-btn">
+                                        <input type="submit" value="Đăng Nhập" class="return-customer-btn">
                                     </form>
                                 </div>
                             </div>

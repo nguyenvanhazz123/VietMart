@@ -1,5 +1,15 @@
-
-.nice-select {
+.color{
+  border-radius: 5px;
+  border: solid 1px #e8e8e8;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: normal;
+  height: 42px;
+  line-height: 40px;
+  padding-left: 8px;
+  margin-right: 10px;
+}
+.nice-select{
   -webkit-tap-highlight-color: transparent;
   background-color: #fff;
   border-radius: 5px;
@@ -7,7 +17,7 @@
   box-sizing: border-box;
   clear: both;
   cursor: pointer;
-  display: block;
+  /* display: none; */
   float: left;
   font-family: inherit;
   font-size: 14px;

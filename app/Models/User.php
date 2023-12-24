@@ -15,10 +15,14 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
 
+    public function vouchers()
+    {
+        return $this->belongsToMany(VoucherVietMart::class, 'custom_voucher_pivot', 'user_id', 'voucher_id');
+    }
     public function wishLists()
-{
-    return $this->hasMany(WishList::class);
-}
+    {
+        return $this->hasMany(WishList::class);
+    }
     public function roles(){
         return $this->belongsToMany(Role::class, 'user_role');
     }

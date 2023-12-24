@@ -28,8 +28,8 @@
         <div class="container">
             <div class="breadcrumb">
                 <ul class="d-flex align-items-center">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active"><a href="blog">Blog</a></li>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li class="active"><a href="#">Bài viết</a></li>
                 </ul>
             </div>
         </div>

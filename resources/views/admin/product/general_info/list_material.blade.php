@@ -74,8 +74,8 @@
                                 <td>
                                     @if ($item->industry->id == 8)
                                         Thời trang
-                                    @elseif ($item->industry->id == 10)
-                                        Điện thoại & Phụ kiện   
+                                    @else
+                                        {{$item->industry->name}}
                                     @endif
                                    
                                 </td>

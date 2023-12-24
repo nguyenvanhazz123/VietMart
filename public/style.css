@@ -1424,7 +1424,7 @@ li.megamenu-img a {
   color: #dedede;
   font-size: 20px;
   position: absolute;
-  right: 10px;
+  /* right: 10px; */
   top: 10px;
   z-index: 9;
   opacity: 0;
@@ -2678,7 +2678,7 @@ li.megamenu-img a {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     padding-bottom: 25px;
     padding-top: 25px;
     position: relative;
@@ -3505,10 +3505,16 @@ ul.tag-list > li > a {
     border: 1px solid #e5e5e5;
 }
 
-.product-stock-status span {
-  color: green;
-  font-weight: 600;
+.product-stock-status .badge-warning {
+    color: #212529;
+    background-color: #ffc107;
+    font-weight: 600;
 }
+.product-stock-status .badge-success {
+    color: #fff;
+    background-color: #28a745;
+    font-weight: 600;
+  }
 .coupon-accordion h3 {
     background-color: #f6f6f6;
     border-top: 3px solid #222222;

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Attribute_value;
 use App\Models\Color;
 use App\Models\General_info;
@@ -12,6 +14,7 @@ use App\Models\Product_category;
 use App\Models\Segment;
 use  App\Models\Attribute;
 use App\Models\Brand;
+use App\Models\Images;
 use App\Models\Material;
 use App\Models\Pattern;
 use App\Models\Size;
@@ -173,7 +176,7 @@ class AdminProductController extends Controller
         $request -> validate(
             [
                 'name' => 'required',
-                'price' => 'required',
+                // 'price' => 'required',
                 'content' => 'required',
                 'description' => 'required',
                 'industry' => 'required',
@@ -194,7 +197,7 @@ class AdminProductController extends Controller
             ],
             [
                 'name' => 'Tên sản phẩm',
-                'price' => 'Giá',
+                // 'price' => 'Giá',
                 'content' => 'Mô tả ngắn',
                 'description' => 'Chi tiết sản phẩm',
                 'file' => 'Ảnh sản phẩm',
@@ -207,25 +210,29 @@ class AdminProductController extends Controller
             ]
         );
         // dd($request->input('quantities'));
-        $input = $request -> all();        
+        $input = $request -> all();   
+        $prices = $request->input('prices');
+        $minPrice = min($prices);     
 
         //Kiểm tra ảnh
         if($request-> hasFile('file')){
             $file = $request->file;
             //Lấy tên file
             $filename = $file -> getClientOriginalName();
-            $file -> move('public/images', $file -> getClientOriginalName());           
+            // $file -> move('public/images', $file -> getClientOriginalName());           
+            $file -> move('public/img/products', $file -> getClientOriginalName());           
 
-            $thumbnail = 'images/'.$filename;
+            $thumbnail = 'img/products/'.$filename;
             $input['thumbnail'] = $thumbnail;
         }
-
         $input['user_id'] = Auth::id();     
+        $input['price'] = $minPrice;
         $input['status'] = 2;
         $input['censorship_id'] = 2;
         $input['product_cat_id'] = $request->product_cat;
         $product = Product::create($input);
-
+       
+        //Lưu thông chung
         General_info::create(
             [
                 'product_id' => $product->id,
@@ -241,10 +248,19 @@ class AdminProductController extends Controller
         //Lưu các giá trị của thông tin bán hàng
         $colors = $request->input('colors');
         $sizes = $request->input('sizes');
+        
         $quantities = $request->input('quantities');
+        $images = $request->file('images_detail');
         foreach ($colors as $index => $color) {
             $size = $sizes[$index];
             $quantity = $quantities[$index];
+            $price = $prices[$index];
+            //Lưu ảnh riêng của từng loại
+            
+            $image = $images[$index];
+            $imageName = $image->getClientOriginalName();
+            $image -> move('public/img/products', $image -> getClientOriginalName());
+            $img_detail = 'img/products/'.$imageName;
 
             $colorModel = Color::firstOrCreate(['name' => $color]);
             $sizeModel = Size::firstOrCreate(['name' => $size]);
@@ -253,7 +269,9 @@ class AdminProductController extends Controller
                 'product_id' => $product->id,
                 'color_id' => $colorModel->id,
                 'size_id' => $sizeModel->id,
+                'price' => $price,
                 'quantity' => $quantity,
+                'image' => $img_detail,
             ]);
 
         }
@@ -593,8 +611,11 @@ class AdminProductController extends Controller
         if(in_array($request->industry_id, $list_id_fashion)){
             $industry_id = 8;
         }
-        if(in_array($request->industry_id, $list_electronic_device)){
+        else if(in_array($request->industry_id, $list_electronic_device)){
             $industry_id = 10;
+        }
+        else{
+            $industry_id = $request->industry_id;
         }
         Material::create([
             'name' => $request->name,
@@ -663,8 +684,11 @@ class AdminProductController extends Controller
         if(in_array($request->industry_id, $list_id_fashion)){
             $industry_id = 8;
         }
-        if(in_array($request->industry_id, $list_electronic_device)){
+        else if(in_array($request->industry_id, $list_electronic_device)){
             $industry_id = 10;
+        }
+        else{
+            $industry_id = $request->industry_id;
         }
         Brand::create([
             'name' => $request->name,
@@ -742,8 +766,11 @@ class AdminProductController extends Controller
         if(in_array($request->industry_id, $list_id_fashion)){
             $industry_id = 8;
         }
-        if(in_array($request->industry_id, $list_electronic_device)){
+        else if(in_array($request->industry_id, $list_electronic_device)){
             $industry_id = 10;
+        }
+        else{
+            $industry_id = $request->industry_id;
         }
         Pattern::create([
             'name' => $request->name,
@@ -784,5 +811,11 @@ class AdminProductController extends Controller
     function delete_pattern($id){
         Pattern::find($id)->delete();
         return redirect('admin/product/pattern/list')->with('status', 'Xóa thành công');
+    }
+
+    //Xuất excel products
+    public function export()
+    {
+        return Excel::download(new ProductExport(), 'products'.'.xlsx');
     }
 }

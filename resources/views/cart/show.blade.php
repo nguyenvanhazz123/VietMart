@@ -46,13 +46,15 @@
                             <form action="{{route('cart.update')}}" method="POST">
                                 @csrf 
                                 <!-- Table Content Start -->
-                                <div class="table-content table-responsive mb-45">
+                                <div class="table-content table-responsive mb-30">
                                     <table>
                                         <thead>
                                             <tr>
                                                 <th class="product-thumbnail">Image</th>
                                                 <th class="product-name">Product name</th>
-                                                <th class="product-price">Price</th>
+                                                <th class="product-type">Type</th>
+                                                <th class="product-type">Color</th>
+                                                <th class="product-price-main">Price</th>
                                                 <th class="product-quantity">Quantity</th>
                                                 <th class="product-subtotal">Total</th>
                                                 <th class="product-remove">Remove</th>
@@ -62,14 +64,22 @@
                                             
                                            @foreach (Cart::session(Auth::user()->id)->getContent() as $item)
                                                 <tr>
-                                                   
                                                     <td class="product-thumbnail">
-                                                        <a href="#"><img src="{{asset($item->attributes->thumbnail)}}" alt="cart-image"></a>
+                                                        <a href="{{route('product.detail', $item->attributes->product_id)}}"><img src="{{asset($item->attributes->thumbnail)}}" alt="cart-image"></a>
                                                     </td>
-                                                    <td class="product-name"><a href="#">{{$item->name}}</a></td>
-                                                    <td class="product-price"><span class="amount">{{number_format($item->price, 0, '', '.')}}đ</span></td>
-                                                    <td class="product-quantity"><input type="number" name="quantity[{{$item->id}}]" value="{{$item->quantity}}"></td>
-                                                    <td class="product-subtotal">{{number_format($item->price * $item->quantity, 0, '', '.')}}đ</td>
+                                                    <td class="product-name"><a href="{{route('product.detail', $item->attributes->product_id)}}">{{$item->name}}</a></td>
+                                                    <td class="product-name"><span>{{$item->attributes->type}}</span></td>
+                                                    <td class="product-name"><span>{{$item->attributes->color}}</span></td>
+                                                    @if ($item->attributes->discount_applied == true)
+                                                        <td class="product-price-main"><span class="amount">{{number_format($item->price, 0, '', '.')}}đ</span></td>
+                                                        <td class="product-quantity"><input class="quantity-input" data-price="{{$item->price}}" data-product-id="{{$item->id}}" min="1" type="number" name="quantity[{{$item->id}}]" value="{{$item->quantity}}"></td>
+                                                        <td class="product-subtotal product-price" data-product-id="{{$item->id}}">{{number_format($item->price * $item->quantity, 0, '', '.')}}đ</td>
+                                                    @else
+                                                        <td class="product-price-main"><span class="amount">{{number_format($item->attributes->originalPrice, 0, '', '.')}}đ</span></td>
+                                                        <td class="product-quantity"><input class="quantity-input" data-price="{{$item->attributes->originalPrice}}" data-product-id="{{$item->id}}" min="1" type="number" name="quantity[{{$item->id}}]" value="{{$item->quantity}}"></td>
+                                                        <td class="product-subtotal product-price" data-product-id="{{$item->id}}">{{number_format($item->attributes->originalPrice * $item->quantity, 0, '', '.')}}đ</td>
+                                                    @endif
+                                                    
                                                     <td class="product-remove"> 
                                                         <a href="javascript:void(0);" onclick="removeFromCart('{{ $item->id }}')">
                                                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -83,15 +93,31 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </form>
                                 <!-- Table Content Start -->
                                 <div class="row">
                                    <!-- Cart Button Start -->
-                                    <div class="col-md-8 col-sm-12">
+                                    <div class="col-md-4 col-sm-12">                                       
                                         <div class="buttons-cart">
-                                            <input type="submit" name="btn_update" value="Update Cart">
-                                            <a href="{{route('home')}}">Continue Shopping</a>
+                                            {{-- <input type="submit" name="btn_update" value="Update Cart"> --}}
+                                            <a href="{{route('home')}}">Back</a>
                                             <a href="{{route('cart.destroy')}}">Clear Cart</a>
+                                            <a href="{{route('cart.show')}}">Hủy voucher</a>                                            
                                         </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="mb-10">
+                                            <form class="row" action="{{route('cart.voucher')}}" method="POST">  
+                                                @csrf
+                                                <div class="col-auto">
+                                                    <input class="form-control" type="text" id="voucherInput" name="voucher_text" placeholder="Nhập mã giảm giá ở đây" aria-label="default input example">
+                                                </div>
+                                                <div class="col-auto">                                                                                          
+                                                    <button class="btn btn-dark btn-voucher">Áp dụng</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        
                                     </div>
                                     <!-- Cart Button Start -->
                                     <!-- Cart Totals Start -->
@@ -102,13 +128,13 @@
                                             <table class="float-md-right">
                                                 <tbody>
                                                     <tr class="cart-subtotal">
-                                                        <th>Subtotal</th>
-                                                        <td><span class="amount">$215.00</span></td>
+                                                        <th>Khuyến mãi</th>
+                                                        <td><span class="amount">0</span></td>
                                                     </tr>
                                                     <tr class="order-total">
-                                                        <th>Total</th>
+                                                        <th>Tổng tiền</th>
                                                         <td>
-                                                            <strong><span class="amount">{{number_format(Cart::session(Auth::user()->id)->getTotal(), 0, '', '.')}} VNĐ</span></strong>
+                                                            <strong><span class="amount total-amount">{{number_format(Cart::session(Auth::user()->id)->getTotal(), 0, '', '.')}} VNĐ</span></strong>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -121,14 +147,13 @@
                                     <!-- Cart Totals End -->
                                 </div>
                                 <!-- Row End -->
-                            </form>
+                            {{-- </form> --}}
                             <!-- Form End -->
                             @else
                                 <p>Không có sản phẩm trong giỏ hàng</p>
-                            @endif
-                           
+                            @endif                           
                         </div>
-                    </div>
+                    </div>                    
                      <!-- Row End -->
                 </div>
             </div>

@@ -548,7 +548,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
     /*----------------------------
     17. Nice Select Activation
     ------------------------------ */
-    $('select').niceSelect();
+    $('.select-box').niceSelect();
     
     /*----------------------------
     18. Price Slider Activation
@@ -565,11 +565,17 @@ NOTE: main.js, All custom script and plugin activation script in this file.
         slide: function(event, ui) {
             const minPrice = ui.values[0];
             const maxPrice = ui.values[1];
-            $("#amount").val(minPrice + "đ" + " - " + maxPrice + "đ");
+            // $("#amount").val(minPrice + "đ" + " - " + maxPrice + "đ");
+            var formattedMinPrice = minPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+            var formattedMaxPrice = maxPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+            $("#amount").val(formattedMinPrice + " - " + formattedMaxPrice);
             minPriceInput.value = minPrice;
             maxPriceInput.value = maxPrice;
         }
     });
+    var formattedMinPrice2 = $("#slider-range" ).slider( "values", 0 ).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    var formattedMaxPrice2 = $( "#slider-range" ).slider( "values", 1 ).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    $("#amount").val(formattedMinPrice2 + " - " + formattedMaxPrice2);
 
     form.addEventListener('submit', function(event) {
 
@@ -603,8 +609,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
         loadProductsByCategoryAndSort(getUrlParameter('segment'), getUrlParameter('order_by'), minPrice, maxPrice, getUrlParameter('keyword'));
     });
     
-    $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + "đ" +
-      " - " + $( "#slider-range" ).slider( "values", 1 ) + "đ" );
+   
 
     function loadProductsByCategoryAndSort(segmentId, sortOption, minPrice, maxPrice, keyword) {
         var url = industryListURL;

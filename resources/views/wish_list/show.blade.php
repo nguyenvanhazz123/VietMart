@@ -29,8 +29,8 @@
         <div class="container">
             <div class="breadcrumb">
                 <ul class="d-flex align-items-center">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active"><a href="wishlist.html">Wishlist</a></li>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li class="active"><a href="#">Yêu thích</a></li>
                 </ul>
             </div>
         </div>
@@ -50,12 +50,12 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th class="product-remove">Remove</th>
-                                        <th class="product-thumbnail">Image</th>
-                                        <th class="product-name">Product</th>
-                                        <th class="product-price">Unit Price</th>
-                                        <th class="product-quantity">Stock Status</th>
-                                        <th class="product-subtotal">add to cart</th>
+                                        <th class="product-remove">Xóa</th>
+                                        <th class="product-thumbnail">Ảnh</th>
+                                        <th class="product-name">Tên sản phẩm</th>
+                                        <th class="product-price">Giá</th>
+                                        <th class="product-quantity">Tình trạng</th>
+                                        <th class="product-subtotal">Xem chi tiết</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,12 +65,18 @@
                                                  <a href="javascript:void(0);" onclick="removeFromWishlist('{{ $item->id }}')"><i class="fa fa-times" aria-hidden="true"></i></a>
                                                 </td>
                                             <td class="product-thumbnail">
-                                                <a href="#"><img src="{{asset($item->product->thumbnail)}}" alt="cart-image"></a>
+                                                <a href="{{route('product.detail', $item->product->id)}}"><img src="{{asset($item->product->thumbnail)}}" alt="cart-image"></a>
                                             </td>
-                                            <td class="product-name"><a href="#">{{$item->product->name}}</a></td>
+                                            <td class="product-name"><a href="{{route('product.detail', $item->product->id)}}">{{$item->product->name}}</a></td>
                                             <td class="product-price"><span class="amount">{{number_format($item->product->price, 0, '', '.')}}đ</span></td>
                                             <td class="product-stock-status"><span>{{$item->product->Status->name_status}}</span></td>
-                                            <td class="product-add-to-cart"><a href="{{route('cart.add', $item->product->id)}}">add to cart</a></td>
+                                            @if ($item->product->Status->id == 1)
+                                            <td class="product-add-to-cart"><a href="{{route('product.detail', $item->product->id)}}">Details</a></td>
+                                            @else
+                                            <td class="product-add-to-cart"><a href="#">Hết Hàng</a></td>
+                                            @endif
+                                            
+                                            
                                         </tr>
                                     @endforeach                         
                                 </tbody>

@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        if(Auth::user()->hasPermission('guest.view')){
+        if(Auth::user()->hasPermission('guest.view') ||Auth::user()->hasPermission('owner.view')){
             return redirect('/home');
         }else{
             return redirect()->route('dashboard');

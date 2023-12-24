@@ -9,17 +9,20 @@ class Comment extends Model
 {
     use HasFactory;
     public $table = 'comments';
-    protected $fillable = ['content', 'user_id', 'product_id', 'status_comment_id'];
+    protected $fillable = ['content', 'rating_id', 'user_id', 'product_id', 'status_comment_id'];
 
     public function user(){
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+    public function rating(){
+        return $this->belongsTo(Rating::class, 'rating_id', 'id');
     }
     public function product(){
         return $this->belongsTo('App\Models\Product', 'product_id');
     }
 
     public function reply(){
-        return $this->hasMany(Reply_comment::class);
+        return $this->hasOne(Reply_comment::class);
     }
 
     function status_comment(){

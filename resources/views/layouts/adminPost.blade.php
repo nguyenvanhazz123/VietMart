@@ -12,7 +12,7 @@
     <script src="https://cdn.tiny.cloud/1/li0xlj16d21qiirdngsl2ptrkbidkinkeqggekoqxemch66g/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         var editor_config = {
-            path_absolute : "http://localhost/unitop.vn/Laravel/laravel-unitop.vn/",
+            path_absolute : "http://localhost/DoAn/vietmart/",
             selector: "textarea",
             plugins: [
             "advlist autolink lists link image charmap print preview hr anchor pagebreak",

@@ -11,11 +11,14 @@ class Order_detail extends Model
     use HasFactory;
     use SoftDeletes;
     public $table='order_detail';
-    protected $fillable = ['order_id', 'product_id' , 'quantity', 'price', 'total', 'status_id', 'owner_id'];
+    protected $fillable = ['order_id', 'user_id', 'product_id','type', 'color', 'quantity', 'price', 'total', 'status_id', 'owner_id'];
 
 
     function order(){
         return $this->belongsTo('App\Models\Order', 'order_id');
+    }
+    function user(){
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
     function product(){
         return $this->belongsTo('App\Models\Product', 'product_id');

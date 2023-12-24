@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/solid.min.css">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
-    @can('post.add')
+    {{-- @can('post.add', 'product.add') --}}
     <script src="https://cdn.tiny.cloud/1/li0xlj16d21qiirdngsl2ptrkbidkinkeqggekoqxemch66g/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         var editor_config = {
-            path_absolute : "http://localhost/unitop.vn/unimart/",
+            path_absolute : "http://localhost/DoAn/vietmart/",
             selector: "textarea",
             plugins: [
             "advlist autolink lists link image charmap print preview hr anchor pagebreak",
@@ -48,7 +48,7 @@
         tinymce.init(editor_config);
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    @endcan
+    {{-- @endcan --}}
 
     <title>@yield('title')</title>
 </head>
@@ -56,28 +56,22 @@
 <body>
     <div id="warpper" class="nav-fixed">
         <nav class="topnav shadow navbar-light bg-white d-flex">
-            <div class="navbar-brand"><a href="?">UNITOP ADMIN</a></div>
+            <div class="navbar-brand"><a href="?"> VIET MART</a></div>
             <div class="nav-right ">
                 <div class="btn-group mr-auto">
-                    <button type="button" class="btn dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="plus-icon fas fa-plus-circle"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{url('admin/post/add')}}">Thêm bài viết</a>
-                        <a class="dropdown-item" href="{{url('admin/product/add')}}">Thêm sản phẩm</a>
-                        <a class="dropdown-item" href="{{url('admin/order/list')}}">Xem đơn hàng</a>
-                    </div>
+                                 
                 </div>
                 <div class="btn-group">
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ Auth::user()->name }}
                     </button> 
                  
-                    <div class="dropdown-menu dropdown-menu-right">
-                        {{-- <a class="dropdown-item" href="#">Tài khoản</a> --}}
-                        {{-- <a class="dropdown-item" href="{{ route('logout') }}">Thoát</a> --}}
+                    <div class="dropdown-menu dropdown-menu-right">                        
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Tài khoản') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('home')">
+                            {{ __('Quay về') }}
                         </x-dropdown-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -109,22 +103,7 @@
                         </a>
                         <i class="arrow fas fa-angle-right"></i>
                     </li>
-                    @endcanany
-                    
-                    {{-- <li class="nav-link {{$module_active == 'page' ? 'active' : ''}}">
-                        <a href="{{url('admin/page/list')}}">
-                            <div class="nav-link-icon d-inline-flex">
-                                <i class="far fa-folder"></i>
-                            </div>
-                            Trang
-                        </a>
-                        <i class="arrow fas fa-angle-right"></i>
-
-                        <ul class="sub-menu">
-                            <li><a href="{{url('admin/page/add')}}">Thêm mới</a></li>
-                            <li><a href="{{url('admin/page/list')}}">Danh sách</a></li>
-                        </ul>
-                    </li> --}}
+                    @endcanany                                    
 
                     @canany(['post.view', 'post.add', 'post.edit', 'post.delete'])
                     <li class="nav-link {{$module_active == 'post' ? 'active' : ''}}">
@@ -243,6 +222,28 @@
                     </li>
                     @endcanany
 
+                    @canany(['voucher.view', 'voucher.edit', 'voucher.add', 'voucher.delete'])
+                    <li class="nav-link {{$module_active == 'voucher' ? 'active' : ''}}">
+                        <a href="{{url('admin/voucher/list?status=valid')}}">
+                            <div class="nav-link-icon d-inline-flex">
+                                <i class="far fa-folder"></i>
+                            </div>
+                            Khuyến mãi 
+                        </a>
+                        <i class="arrow fas fa-angle-right"></i>
+                        <ul class="sub-menu">
+                            @can('voucher.add')
+                            <li><a href="{{url('admin/voucher/add')}}">Thêm mới</a></li>
+                            @endcan
+
+                            @can('voucher.view')
+                            <li><a href="{{url('admin/voucher/list?status=valid')}}">Danh sách</a></li>
+                            @endcan
+                        
+                        </ul>
+                    </li>
+                    @endcanany
+
                     @canany(['user.view', 'user.add', 'user.edit', 'user.delete'])
                     <li class="nav-link {{$module_active == 'user' ? 'active' : ''}}">
                         <a href="{{url('admin/user/list')}}">
@@ -302,6 +303,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    @yield("script_revenue")
+    @yield("script_Order")
 </body>
 
 </html>

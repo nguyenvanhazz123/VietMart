@@ -29,6 +29,9 @@ class AdminOrderController extends Controller
             $list_order = Order::with('user');  
         }  
         else if($status == 'unfinished'){
+            $list_act = [
+                'finish_order' => 'Hoàn thành',
+            ];
             $list_order = Order::with('user');  
         }
         else if($status == 'trash'){
@@ -88,38 +91,42 @@ class AdminOrderController extends Controller
         return view('admin.order.list', compact('list_order', 'count', 'list_act'));
     }
 
-    function action(Request $request){
+    function action(Request $request){        
         $list_check = $request-> input('list_check');
         if($list_check){            
             //Thực hiện tác vụ
             if(!empty($list_check)){
                 $act = $request->input('act');
                 if($act == ''){
-                    return redirect('admin/order/list')->with('status', 'Vui lòng chọn hành động');
+                    return redirect('admin/order/list?status=finish')->with('status', 'Vui lòng chọn hành động');
                 }
                 if($act == "delete"){
                     Order_detail::destroy($list_check);
-                    return redirect('admin/order/list')->with('status', 'Xóa thành công các phần tử đã chọn');
+                    return redirect('admin/order/list?status=finish')->with('status', 'Xóa thành công các phần tử đã chọn');
                 }
                 else if($act == "restore"){
                     Order_detail::withTrashed()->whereIn('id', $list_check) -> restore();
-                    return redirect('admin/order/list')->with('status', 'Khôi phục thành công các phần tử đã chọn');
+                    return redirect('admin/order/list?status=finish')->with('status', 'Khôi phục thành công các phần tử đã chọn');
+                }
+                else if($act == "finish_order"){
+                    Order_detail::whereIn('id', $list_check)->update(['status_id' => '2']);
+                    return redirect('admin/order/list?status=finish')->with('status', 'Thao tác thành công các phần tử đã chọn');
                 }
                 else{
                     
                     Order_detail::withTrashed()->whereIn('id', $list_check) -> forceDelete();
-                    return redirect('admin/order/list')->with('status', 'Xóa vĩnh viễn thành công các phần tử đã chọn');
+                    return redirect('admin/order/list?status=finish')->with('status', 'Xóa vĩnh viễn thành công các phần tử đã chọn');
                 }
             }            
         }
         else{
-            return redirect('admin/order/list')->with('status', 'Vui lòng chọn phần tử để thực hiện thao tác');
+            return redirect('admin/order/list?status=finish')->with('status', 'Vui lòng chọn phần tử để thực hiện thao tác');
         }
     }
 
     function delete($id){
         if($id != null){
-            $order = Order::find($id);
+            $order = Order_detail::find($id);
             $order->delete();
             return redirect('admin/order/list')->with('status', 'Xóa thành công');
         }

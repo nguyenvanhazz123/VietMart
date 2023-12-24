@@ -6,7 +6,7 @@
             display: flex;
         }
         .form-group {
-            margin-right: 10px; /* Thêm khoảng cách giữa các div */
+            margin-right: 10px; 
         }
 </style>
 <div id="content" class="container-fluid">
@@ -18,23 +18,18 @@
             <form action="{{url('admin/product/store')}}" method="POST" enctype="multipart/form-data">
                 @csrf   
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="form-group">
                             <label for="name">Tên sản phẩm</label>
                             <input class="form-control" type="text" name="name" id="name" value="{{old('name')}}">
                             @error('name')
                                 <small class="form-text text-danger">{{$message}}</small>                    
                             @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Giá</label>
-                            <input class="form-control" type="text" name="price" id="name" value="{{old('price')}}">
-                            @error('price')
-                                <small class="form-text text-danger">{{$message}}</small>                    
-                            @enderror
-                        </div>
+                        </div>                      
                     </div>
-                    <div class="col-6">
+                </div>
+                <div class="row">
+                    <div class="col-12">
                         <div class="form-group">
                             <label for="intro">Mô tả sản phẩm</label>
                             <textarea name="content" class="form-control" id="intro" cols="30" rows="5">{{old('content')}}</textarea>
@@ -131,8 +126,9 @@
                 <fieldset id="fieldset-sale-info" style="display: none;">
                     <legend>Thông tin bán hàng</legend>
                     <button type="button" id="addDetails">Thêm</button>
-                    {{-- Màu sắc --}}
+
                     <div class="form-group-container" id="sale-info">
+                        {{-- Màu sắc --}}
                         <div id="color-box" class="form-group">
                             <label>Màu sắc:</label>
                             <input type="text" name="colors[]">
@@ -148,6 +144,14 @@
                                 <small class="form-text text-danger">{{$message}}</small>                    
                             @enderror
                         </div>
+                        {{-- Giá --}}
+                        <div id="size-box" class="form-group">
+                            <label>Giá bán:</label>
+                            <input type="text" name="prices[]">
+                            @error('price')
+                                <small class="form-text text-danger">{{$message}}</small>                    
+                            @enderror
+                        </div>
                         {{-- Số lượng --}}
                         <div id="quantity-box" class="form-group">
                             <label>Số lượng:</label>
@@ -156,7 +160,11 @@
                                 <small class="form-text text-danger">{{$message}}</small>                    
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <input type="file" name="images_detail[]" multiple>
+                        </div>
                     </div>
+
                     <div id="child" >
 
                     </div>

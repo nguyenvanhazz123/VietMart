@@ -1,0 +1,25 @@
+.detail-block .detail-title{
+    background: rgba(0,0,0,.02);
+    color: rgba(0,0,0,.87);
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0.875rem;
+    text-transform: capitalize;
+}
+
+.detail-info {
+    margin: 1.875rem 0.9375rem 0.9375rem;
+}
+.dR8kXc {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.zquA4o {
+    color: rgba(0,0,0,.4);
+    font-size: .875rem;
+    box-sizing: border-box;
+    width: 8.75rem;
+    padding-right: 0.75rem;
+}
